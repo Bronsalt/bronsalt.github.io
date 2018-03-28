@@ -11,7 +11,7 @@
   <input id="word3" type="text" name="word3">
 </form>
 
-<button onclick="updateStory()">Click me</button>
+<button onclick="updateStory()">Add To Story</button>
 	
 	</center>
 
@@ -21,11 +21,40 @@
 
 <p id="story"></p>
 
+<br>
+<br>
+<br>
+<center>
+<button onclick="clearStory()">Clear Story</button>
+</center>
+<p id="test">
+</p>
+
+<script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
 <script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAe_Y3RxB_h75PcD2Dz5KJ-GfZ_XysOgYI",
+    authDomain: "three-word-game.firebaseapp.com",
+    databaseURL: "https://three-word-game.firebaseio.com",
+    projectId: "three-word-game",
+    storageBucket: "gs://three-word-game.appspot.com",
+    messagingSenderId: "4222397042"
+  };
+  firebase.initializeApp(config);
+
+var database = firebase.database();
+var ref = firebase.database().ref('story');
+
+readStory();
 
 function updateStory() {
 	
-  var story = document.getElementById("story").innerHTML;
+  var addToStory;
+  var oldStory = document.getElementById("story").innerHTML;
+  
+  console.log(oldStory);
+  
   var word1 = document.getElementById('word1').value;
 	var word2 = document.getElementById('word2').value;
 	var word3 = document.getElementById('word3').value; 
@@ -43,14 +72,47 @@ function updateStory() {
   }
   
   else {
-		var word1 = document.getElementById('word1').value + " ";
-		var word2 = document.getElementById('word2').value + " ";
-		var word3 = document.getElementById('word3').value + " ";
-		console.log("test");
+		var word1 = word1 + " ";
+		var word2 = word2 + " ";
+		var word3 = word3 + " ";
+    addToStory = word1+word2+word3;
   
-  	document.getElementById("story").innerHTML = story+word1+word2+word3;  
+
+    document.getElementById("word1").value = "";
+    document.getElementById("word2").value = "";
+    document.getElementById("word3").value = "";
+    
+    writeStory(addToStory, oldStory);
+    
+    readStory();
+    
   }
+}
+
+function writeStory(addToStory, oldStory) {
+  firebase.database().ref().set({
+		story: oldStory+addToStory
+  });
+}
+
+function readStory(){
+  
+  var pleaseWork;
+  
+		ref.on("value", function(snapshot) {
+ 	  	pleaseWork = snapshot.val();
+      document.getElementById("story").innerHTML = pleaseWork;
+		});  
+}
+
+function clearStory() {
+	var nothin = "";
+	firebase.database().ref().set({
+		testo: nothin
+  });
 
 }
+
+
 </script>
 </html>
