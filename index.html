@@ -16,13 +16,9 @@
 	</center>
 
 <br> 
-<br> 
-<br>
 
 <p id="story"></p>
 
-<br>
-<br>
 <br>
 <center>
 <button onclick="clearStory()">Clear Story</button>
@@ -64,11 +60,11 @@ function updateStory() {
   var n3 = word3.includes(" ")
   
   if(n1 == true || n2 == true || n3 == true) {
-  	alert("Only one word per text box! you big dum idiote xd");
+  	alert("Only one word per text box!");
   }
   
   else if(word1.length>=15 || word2.length>=15 || word3.length>=15) {
-  	alert("No words longer than 15 characters! you big dum idiote xd");
+  	alert("No words longer than 15 characters!");
   }
   
   else {
@@ -83,7 +79,7 @@ function updateStory() {
     document.getElementById("word3").value = "";
     
     writeStory(addToStory, oldStory);
-    
+
     readStory();
     
   }
@@ -108,7 +104,7 @@ function readStory(){
 function clearStory() {
 	var nothin = "";
 	firebase.database().ref().set({
-		testo: nothin
+		story: nothin
   });
 
 }
@@ -116,3 +112,4 @@ function clearStory() {
 
 </script>
 </html>
+
