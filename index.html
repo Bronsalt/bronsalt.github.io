@@ -59,8 +59,16 @@ function updateStory() {
   var n2 = word2.includes(" ")
   var n3 = word3.includes(" ")
   
+  var code1 = word1.includes("<");
+  var code2 = word2.includes("<");
+  var code3 = word2.includes("<");
+  
   if(n1 == true || n2 == true || n3 == true) {
   	alert("Only one word per text box!");
+  }
+  
+  else if(code1 == true || code2 == true || code3 == true) {
+  	alert("Nice try Chris");
   }
   
   else if(word1.length>=15 || word2.length>=15 || word3.length>=15) {
