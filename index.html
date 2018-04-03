@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<center><h1>Welcome! Enter Any three words, then press enter to continue the story</h1> 
+<center><h1>Welcome! Enter up to three words, then press "Add To Story" to continue the story!</h1> 
 <br>
 <br>
 <br>
@@ -23,7 +23,7 @@
 <center>
 <button onclick="clearStory()">Clear Story</button>
 </center>
-<p id="test">
+<p hidden id="test">
 </p>
 
 <script src="https://www.gstatic.com/firebasejs/4.11.0/firebase.js"></script>
@@ -42,10 +42,15 @@
 var database = firebase.database();
 var ref = firebase.database().ref('story');
 
+var userId = Math.floor(Math.random() * 100000000001);
+document.getElementById("test").innerHTML = userId;
+
 readStory();
 
 function updateStory() {
-	
+
+	var userId = document.getElementById("test").innerHTML
+  
   var addToStory;
   var oldStory = document.getElementById("story").innerHTML;
   
@@ -68,7 +73,7 @@ function updateStory() {
   }
   
   else if(code1 == true || code2 == true || code3 == true) {
-  	alert("Nice try Chris");
+  	alert("No HTML injecting!");
   }
   
   else if(word1.length>=15 || word2.length>=15 || word3.length>=15) {
@@ -86,16 +91,16 @@ function updateStory() {
     document.getElementById("word2").value = "";
     document.getElementById("word3").value = "";
     
-    writeStory(addToStory, oldStory);
+    writeStory(addToStory, oldStory, userId);
 
     readStory();
     
   }
 }
 
-function writeStory(addToStory, oldStory) {
+function writeStory(addToStory, oldStory, userId) {
   firebase.database().ref().set({
-		story: oldStory+addToStory
+		story:oldStory+addToStory
   });
 }
 
